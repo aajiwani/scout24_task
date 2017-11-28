@@ -4,6 +4,8 @@
 
 ```npm run dev``` or ```yarn dev```
 
+#### Please consider changing db.example.js with appropriate mongodb url and renaming it to db.js
+
 ### Requirements
 
 Create a git repository (either local or public one on GitHub) that contains a RESTful web-service written in Scala. The service should allow users to place new car adverts and view, modify and delete existing car adverts.
