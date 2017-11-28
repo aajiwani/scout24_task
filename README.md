@@ -1,3 +1,9 @@
+### Usage
+
+```npm install``` or ```yarn install```
+
+```npm run dev``` or ```yarn dev```
+
 ### Requirements
 
 Create a git repository (either local or public one on GitHub) that contains a RESTful web-service written in Scala. The service should allow users to place new car adverts and view, modify and delete existing car adverts.
