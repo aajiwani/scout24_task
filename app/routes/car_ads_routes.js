@@ -9,8 +9,15 @@ module.exports = function(app, db) {
   });
 
   // View Ad
+  // Sort by clause should be in JSON format
+  // {
+  //   id: -1, // Desc
+  //   name: 1 // Asc
+  // }
   app.get("/car_ads", (req, res) => {
-    CarAdvertCtrl.ListAllAds({})
+    var sortBy = {};
+    if (req.query.sortBy) sortBy = JSON.parse(req.query.sortBy);
+    CarAdvertCtrl.ListAllAds(req.query.sortBy || {})
       .then(ads => {
         res.json(ads);
       })
