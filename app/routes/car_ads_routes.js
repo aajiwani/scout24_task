@@ -1,3 +1,5 @@
+var CarAdvert = require("./app/models/car_advert");
+
 module.exports = function (app, db) {
 
     // Create Ad
