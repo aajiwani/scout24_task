@@ -12,7 +12,8 @@ var CarAdvertSchema = new Schema({
     required: [true, "`title` is required for the car advertisement"]
   },
   fuel: {
-    type: ["gasoline", "diesel"],
+    type: String,
+    enum: ["gasoline", "diesel"],
     required: [true, "`fuel` is required for the car advertisement"]
   },
   price: {

@@ -33,11 +33,9 @@ module.exports = function(app, db) {
 
   // View Single Ad
   app.get("/car_ads/:ad_id", (req, res) => {
-    var sortBy = {};
-    if (req.query.sortBy) sortBy = JSON.parse(req.query.sortBy);
-    CarAdvertCtrl.ListAllAds(req.query.sortBy || {})
-      .then(ads => {
-        res.json(ads);
+    CarAdvertCtrl.GetCarAdvert(req.params.ad_id)
+      .then(ad => {
+        res.json(ad);
       })
       .catch(e => {
         res.send(e);
