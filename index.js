@@ -6,7 +6,8 @@ const app = express();
 
 const port = 8000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
 mongoose.connect(db.url);

@@ -3,12 +3,17 @@ var CarAdvertCtrl = require("../controllers/car_advert");
 module.exports = function(app, db) {
   // Create Ad
   app.post("/car_ads", (req, res) => {
-    // Here we create the ad
     console.log(req.body);
-    res.send("hello");
+    CarAdvertCtrl.AddCarAdvert(req.body)
+      .then(() => {
+        res.json("Ad created successfully");
+      })
+      .catch(e => {
+        res.send(e);
+      });
   });
 
-  // View Ad
+  // View Ads
   // Sort by clause should be in JSON format
   // {
   //   id: -1, // Desc
@@ -26,7 +31,31 @@ module.exports = function(app, db) {
       });
   });
 
+  // View Single Ad
+  app.get("/car_ads/:ad_id", (req, res) => {
+    var sortBy = {};
+    if (req.query.sortBy) sortBy = JSON.parse(req.query.sortBy);
+    CarAdvertCtrl.ListAllAds(req.query.sortBy || {})
+      .then(ads => {
+        res.json(ads);
+      })
+      .catch(e => {
+        res.send(e);
+      });
+  });
+
   // Modify Ad
+  app.get("/car_ads", (req, res) => {
+    var sortBy = {};
+    if (req.query.sortBy) sortBy = JSON.parse(req.query.sortBy);
+    CarAdvertCtrl.ListAllAds(req.query.sortBy || {})
+      .then(ads => {
+        res.json(ads);
+      })
+      .catch(e => {
+        res.send(e);
+      });
+  });
 
   // Delete Ad
 };

@@ -1,10 +1,11 @@
+var counter = require("./counter");
+
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var CarAdvertSchema = new Schema({
-  id: {
-    type: Number,
-    required: [true, "`id` is required for the car advertisement"]
+  _id: {
+    type: Number
   },
   title: {
     type: String,
@@ -25,7 +26,7 @@ var CarAdvertSchema = new Schema({
   mileage: {
     type: Number,
     required: [
-      () => {
+      function() {
         return !this.new;
       },
       "`mileage` is required for the car advertisement that is for an old car"
@@ -34,12 +35,28 @@ var CarAdvertSchema = new Schema({
   first_registration: {
     type: Date,
     required: [
-      () => {
+      function() {
         return !this.new;
       },
       "`first_registration` is required for the car advertisement that is for an old car"
     ]
   }
+});
+
+CarAdvertSchema.pre("save", function(next) {
+  var doc = this;
+  console.log("Presave");
+  console.log(doc);
+  counter.findByIdAndUpdate({_id: "CarAdvertId"}, { $inc: { seq: 1 } }, {upsert: true, new: true}, function(
+    err,
+    result
+  ) {
+    if (err) {
+      throw err;
+    }
+    doc._id = result.seq;
+    next();
+  });
 });
 
 module.exports = mongoose.model("CarAdvert", CarAdvertSchema);

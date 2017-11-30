@@ -62,3 +62,4 @@ dist/
 package-lock.json
 yarn.lock
 config/db.js
+seed.json
