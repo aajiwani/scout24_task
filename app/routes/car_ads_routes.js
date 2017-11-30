@@ -1,3 +1,5 @@
+var _ = require("lodash");
+
 var CarAdvertCtrl = require("../controllers/car_advert");
 
 module.exports = function(app, db) {
@@ -43,12 +45,10 @@ module.exports = function(app, db) {
   });
 
   // Modify Ad
-  app.get("/car_ads", (req, res) => {
-    var sortBy = {};
-    if (req.query.sortBy) sortBy = JSON.parse(req.query.sortBy);
-    CarAdvertCtrl.ListAllAds(req.query.sortBy || {})
-      .then(ads => {
-        res.json(ads);
+  app.put("/car_ads/:ad_id", (req, res) => {
+    CarAdvertCtrl.ModifyCarAdvert(req.params.ad_id, _.omit(req.body, ["_id"]))
+      .then(() => {
+        res.json("Ad updated successfully");
       })
       .catch(e => {
         res.send(e);

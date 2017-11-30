@@ -1,3 +1,4 @@
+var _ = require("lodash");
 var counter = require("./counter");
 
 var mongoose = require("mongoose");
@@ -46,18 +47,18 @@ var CarAdvertSchema = new Schema({
 
 CarAdvertSchema.pre("save", function(next) {
   var doc = this;
-  console.log("Presave");
-  console.log(doc);
-  counter.findByIdAndUpdate({_id: "CarAdvertId"}, { $inc: { seq: 1 } }, {upsert: true, new: true}, function(
-    err,
-    result
-  ) {
-    if (err) {
-      throw err;
+  counter.findByIdAndUpdate(
+    { _id: "CarAdvertId" },
+    { $inc: { seq: 1 } },
+    { upsert: true, new: true },
+    function(err, result) {
+      if (err) {
+        throw err;
+      }
+      doc._id = result.seq;
+      next();
     }
-    doc._id = result.seq;
-    next();
-  });
+  );
 });
 
 module.exports = mongoose.model("CarAdvert", CarAdvertSchema);
