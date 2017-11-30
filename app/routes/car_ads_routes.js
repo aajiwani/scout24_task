@@ -56,4 +56,13 @@ module.exports = function(app, db) {
   });
 
   // Delete Ad
+  app.delete("/car_ads/:ad_id", (req, res) => {
+    CarAdvertCtrl.DeleteCarAdvert(req.params.ad_id)
+      .then(() => {
+        res.json("Ad deleted successfully");
+      })
+      .catch(e => {
+        res.send(e);
+      });
+  });
 };

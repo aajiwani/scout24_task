@@ -24,12 +24,11 @@ exports.ModifyCarAdvert = (advertId, newData) => {
           $unset: { mileage: undefined, first_registration: undefined }
         };
         console.log(newData);
-      }
-      else
-      {
-        if (!(_.has(newData, 'mileage') && _.has(newData, 'mileage')))
-        {
-          throw new Error("When the car is old, `mileage` and `first_registration` are required");
+      } else {
+        if (!(_.has(newData, "mileage") && _.has(newData, "mileage"))) {
+          throw new Error(
+            "When the car is old, `mileage` and `first_registration` are required"
+          );
         }
       }
     } else {
@@ -38,4 +37,10 @@ exports.ModifyCarAdvert = (advertId, newData) => {
   }
 
   return CarAdvert.update({ _id: advertId }, newData);
+};
+
+exports.DeleteCarAdvert = advertId => {
+  return CarAdvert.remove({
+    _id: advertId
+  });
 };
